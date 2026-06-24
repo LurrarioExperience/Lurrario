@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LURRARIO Experience · Talleres de Terrario en Donostia</title>
+  <meta name="description" content="LURRARIO Experience — talleres de terrario en Donostia. Desconecta, crea con tus manos y llévate a casa un pequeño ecosistema lleno de significado." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rosa:     #AD6F7A;
+      --rosa-lt:  #D4A0A8;
+      --rosa-dk:  #8B5560;
+      --verde:    #1B4332;
+      --verde-lt: #2D6A4F;
+      --crema:    #EEE4DA;
+      --crema-dk: #C8B8A2;
+      --blanco:   #FAFAF7;
+      --carbon:   #1A1A18;
+      --carbon-lt:#3A3530;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'DM Sans', system-ui, sans-serif;
+      --max-w: 1200px;
+      --r-btn: 50px;
+      --r-card: 20px;
+      --r-img: 16px;
+      --r-input: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--blanco); color: var(--carbon); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; transition: background .4s, box-shadow .4s; }
+    nav.scrolled { background: rgba(253,250,247,.95); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(90,60,50,.08); }
+    .nav-logo img { height: 50px; transition: filter .4s; }
+    nav:not(.scrolled) .nav-logo img { filter: brightness(0) invert(1); }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a { font-size: .73rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(253,250,247,.85); transition: color .3s; }
+    nav.scrolled .nav-links a { color: var(--carbon-lt); }
+    .nav-links a:hover { color: var(--rosa); }
+    .nav-cta { padding: .5rem 1.25rem; border: 1px solid rgba(253,250,247,.5); color: rgba(253,250,247,.9) !important; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: all .3s; }
+    nav.scrolled .nav-cta { border-color: var(--rosa); color: var(--rosa) !important; }
+    .nav-cta:hover { background: var(--rosa) !important; border-color: var(--rosa) !important; color: var(--blanco) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--blanco); transition: background .4s; }
+    nav.scrolled .hamburger span { background: var(--carbon); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--blanco); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--serif); font-size: 2rem; color: var(--carbon); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--carbon); }
+
+    /* ── BOTONES ── */
+    .btn-primary { display: inline-block; padding: .85rem 2rem; background: var(--rosa); color: var(--blanco); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: background .3s, transform .2s; }
+    .btn-primary:hover { background: var(--rosa-dk); transform: translateY(-1px); }
+    .btn-ghost { display: inline-block; padding: .85rem 2rem; border: 1.5px solid rgba(253,250,247,.45); color: var(--blanco); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: all .3s; }
+    .btn-ghost:hover { border-color: var(--blanco); background: rgba(253,250,247,.08); }
+    .btn-outline { display: inline-block; padding: .75rem 2rem; border: 1.5px solid var(--carbon-lt); color: var(--carbon); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: all .3s; }
+    .btn-outline:hover { background: var(--carbon); color: var(--blanco); border-color: var(--carbon); }
+    .btn-light { display: inline-block; padding: .85rem 2rem; background: var(--blanco); color: var(--verde); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: background .3s; font-weight: 500; }
+    .btn-light:hover { background: var(--crema); }
+    .btn-verde { display: inline-block; padding: .85rem 2rem; background: var(--verde); color: var(--blanco); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border-radius: var(--r-btn); transition: background .3s; }
+    .btn-verde:hover { background: #4a5942; }
+
+    /* ── HERO ── */
+    #hero { position: relative; min-height: 100vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,32,24,.88) 0%, rgba(13,32,24,.3) 50%, rgba(13,32,24,.05) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 2.5rem 6rem; max-width: var(--max-w); margin: 0 auto; width: 100%; }
+    .hero-eyebrow { font-size: .68rem; letter-spacing: .28em; text-transform: uppercase; color: var(--rosa-lt); margin-bottom: 1rem; }
+    .hero-title { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; line-height: 1.05; color: var(--blanco); margin-bottom: 1.5rem; }
+    .hero-title em { font-style: italic; color: var(--rosa-lt); }
+    .hero-sub { font-size: 1rem; font-weight: 300; color: rgba(253,250,247,.75); max-width: 460px; margin-bottom: .5rem; line-height: 1.75; }
+    .hero-sub2 { font-size: .8rem; color: rgba(253,250,247,.42); margin-bottom: 2.5rem; letter-spacing: .04em; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .scroll-hint { position: absolute; bottom: 2rem; right: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: .5rem; color: rgba(253,250,247,.35); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; }
+    .scroll-hint::after { content: ''; display: block; width: 1px; height: 44px; background: rgba(253,250,247,.28); animation: scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine { 0%,100% { opacity: .3; } 50% { opacity: .7; } }
+
+    /* ── BASE SECCIONES ── */
+    section { padding: 7rem 2.5rem; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-eyebrow { font-size: .67rem; letter-spacing: .22em; text-transform: uppercase; color: var(--rosa); margin-bottom: 1.1rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 300; line-height: 1.15; color: var(--carbon); margin-bottom: 1.5rem; }
+    .section-title em { font-style: italic; color: var(--verde); }
+    .section-body { font-size: .96rem; font-weight: 300; color: var(--carbon-lt); line-height: 1.85; max-width: 540px; }
+    .divisor { display: flex; justify-content: center; padding: 2rem 0; opacity: .4; }
+
+    /* ── SOBRE LURRARIO ── */
+    #sobre { background: var(--blanco); }
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .sobre-img { width: 100%; aspect-ratio: 4/5; border-radius: var(--r-img); overflow: hidden; position: relative; }
+    .sobre-img img { width: 100%; height: 100%; object-fit: cover; }
+    .sobre-texto p { font-size: .96rem; font-weight: 300; color: var(--carbon-lt); line-height: 1.85; margin-bottom: 1rem; }
+    .sobre-texto p strong { font-weight: 500; color: var(--carbon); }
+
+    /* ── TALLER ESPECIAL (Día de la Amistad) ── */
+    #taller-especial { background: var(--crema); padding: 5rem 2.5rem; }
+    .especial-inner { max-width: var(--max-w); margin: 0 auto; }
+    .especial-badge { display: inline-flex; align-items: center; gap: .5rem; background: var(--rosa); color: var(--blanco); font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; padding: .45rem 1.1rem; border-radius: var(--r-btn); margin-bottom: 1.5rem; }
+    .especial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .especial-img { width: 100%; aspect-ratio: 3/4; border-radius: var(--r-img); overflow: hidden; position: relative; }
+    .especial-img img { width: 100%; height: 100%; object-fit: cover; }
+    .especial-content .section-title em { color: var(--rosa); }
+    .especial-subtitulo { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--rosa); margin-bottom: 1.5rem; }
+    .especial-desc { font-size: .94rem; font-weight: 300; color: var(--carbon-lt); line-height: 1.85; margin-bottom: 2rem; }
+    .especial-incluye { margin-bottom: 2rem; }
+    .especial-incluye h4 { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--rosa); margin-bottom: 1rem; }
+    .incluye-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+    .incluye-item { display: flex; align-items: center; gap: .65rem; font-size: .84rem; color: var(--carbon-lt); }
+    .incluye-item span { font-size: 1rem; }
+    .especial-datos { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; padding: 1.5rem; background: var(--blanco); border-radius: var(--r-card); }
+    .dato { display: flex; flex-direction: column; gap: .2rem; }
+    .dato-label { font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--rosa); }
+    .dato-valor { font-size: .88rem; font-weight: 500; color: var(--carbon); }
+    .especial-precio { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--verde); margin-bottom: 1.5rem; }
+    .especial-precio small { font-family: var(--sans); font-size: .8rem; color: var(--carbon-lt); font-weight: 300; }
+
+    /* ── EXPERIENCIAS ── */
+    #experiencias { background: var(--blanco); }
+    .exp-intro { text-align: center; margin-bottom: 3.5rem; }
+    .exp-intro .section-title { text-align: center; }
+    .exp-intro .section-title::after { content: ''; display: block; width: 36px; height: 2px; background: var(--rosa); margin: 1rem auto 0; }
+    .exp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+    .exp-card { background: var(--blanco); border-radius: var(--r-card); overflow: hidden; box-shadow: 0 2px 20px rgba(90,60,50,.07); transition: transform .3s, box-shadow .3s; }
+    .exp-card:hover { transform: translateY(-5px); box-shadow: 0 14px 42px rgba(90,60,50,.12); }
+    .exp-img { width: 100%; aspect-ratio: 4/3; position: relative; overflow: hidden; }
+    .exp-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .exp-card:hover .exp-img img { transform: scale(1.04); }
+    .exp-badge-icon { position: absolute; bottom: .75rem; left: .75rem; width: 36px; height: 36px; background: rgba(253,250,247,.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .exp-body { padding: 1.5rem; }
+    .exp-body h3 { font-family: var(--serif); font-size: .73rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--carbon); margin-bottom: .65rem; }
+    .exp-body p { font-size: .84rem; color: var(--carbon-lt); line-height: 1.72; margin-bottom: 1.1rem; }
+    .exp-link { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--rosa); }
+    .exp-link:hover { color: var(--rosa-dk); }
+
+    /* ── GALERÍA ── */
+    #galeria { background: var(--crema); }
+    .galeria-intro { text-align: center; margin-bottom: 3rem; }
+    .galeria-intro .section-title { text-align: center; }
+    .galeria-grid { display: grid; grid-template-columns: repeat(2,1fr); grid-template-rows: auto auto; gap: .75rem; margin-bottom: 2rem; }
+    .galeria-item { border-radius: var(--r-img); overflow: hidden; position: relative; }
+    .galeria-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; display: block; }
+    .galeria-item:hover img { transform: scale(1.03); }
+    .galeria-item:nth-child(1) { aspect-ratio: 4/3; }
+    .galeria-item:nth-child(2) { aspect-ratio: 4/3; }
+    .galeria-item:nth-child(3) { aspect-ratio: 16/9; grid-column: 1 / -1; }
+    .galeria-cta { text-align: center; }
+
+    /* ── ASÍ FUNCIONA ── */
+    #como-funciona { background: var(--blanco); }
+    .funciona-intro { text-align: center; margin-bottom: 3.5rem; }
+    .funciona-intro .section-title { text-align: center; }
+    .pasos-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+    .paso { text-align: center; padding: 0 .5rem; }
+    .paso-icon { width: 54px; height: 54px; border: 1.5px solid var(--rosa); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.3rem; }
+    .paso h3 { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--carbon); margin-bottom: .55rem; }
+    .paso p { font-size: .82rem; color: var(--carbon-lt); line-height: 1.75; }
+
+    /* ── TEAM BUILDING ── */
+    #team-building { background: #1B4332; padding: 7rem 2.5rem; }
+    .tb-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    #team-building .section-eyebrow { color: var(--rosa-lt); }
+    #team-building .section-title { color: var(--blanco); }
+    #team-building .section-title em { color: var(--crema); }
+    #team-building .section-body { color: rgba(253,250,247,.7); max-width: 100%; }
+    .tb-list { margin-top: 1.8rem; display: flex; flex-direction: column; gap: .85rem; }
+    .tb-list li { display: flex; align-items: flex-start; gap: .85rem; font-size: .88rem; color: rgba(253,250,247,.78); line-height: 1.65; }
+    .tb-list li::before { content: '—'; color: var(--rosa-lt); flex-shrink: 0; }
+    .tb-img-box { width: 100%; aspect-ratio: 4/3; border-radius: var(--r-img); overflow: hidden; position: relative; }
+    .tb-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── FUNDADORA ── */
+    #fundadora { background: var(--crema); }
+    .fundadora-inner { display: grid; grid-template-columns: 5fr 7fr; gap: 5rem; align-items: center; }
+    .fundadora-img { width: 100%; aspect-ratio: 3/4; border-radius: var(--r-img); overflow: hidden; position: relative; }
+    .fundadora-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .fundadora-quote { font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 300; font-style: italic; line-height: 1.45; color: var(--verde); margin-bottom: 2rem; border-left: 2px solid var(--rosa); padding-left: 1.5rem; }
+    .fundadora-text { font-size: .94rem; font-weight: 300; color: var(--carbon-lt); line-height: 1.88; }
+    .fundadora-name { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--crema-dk); font-family: var(--serif); font-size: 1.1rem; color: var(--carbon); }
+    .fundadora-name small { display: block; font-family: var(--sans); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--verde-lt); margin-top: .25rem; }
+    .fundadora-name .bio { display: block; font-family: var(--sans); font-size: .8rem; color: var(--carbon-lt); font-weight: 300; letter-spacing: 0; text-transform: none; font-style: normal; margin-top: .4rem; }
+
+    /* ── FRASE ── */
+    #frase { background: #AD6F7A; padding: 5rem 2.5rem; text-align: center; }
+    #frase blockquote { font-family: var(--serif); font-size: clamp(1.5rem, 3.2vw, 2.5rem); font-weight: 300; font-style: italic; color: var(--blanco); line-height: 1.35; max-width: 760px; margin: 0 auto; }
+
+    /* ── CONTACTO ── */
+    #contacto { background: #122b1e; }
+    .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contacto-izq .section-eyebrow { color: var(--rosa-lt); }
+    .contacto-izq .section-title { color: var(--blanco); }
+    .contacto-izq .section-body { color: rgba(253,250,247,.55); max-width: 100%; margin-bottom: 2.5rem; }
+    .contacto-canales { display: flex; flex-direction: column; gap: 1rem; }
+    .canal-btn { display: flex; align-items: center; gap: .85rem; padding: .9rem 1.5rem; border-radius: var(--r-btn); font-size: .82rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; transition: transform .2s, opacity .2s; }
+    .canal-btn:hover { transform: translateX(4px); opacity: .88; }
+    .canal-whatsapp { background: var(--verde); color: var(--blanco); }
+    .canal-instagram { background: var(--rosa); color: var(--blanco); }
+    .canal-email { background: rgba(253,250,247,.07); border: 1px solid rgba(253,250,247,.14); color: rgba(253,250,247,.72); }
+    .canal-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .contacto-der .section-eyebrow { color: var(--rosa-lt); }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .85rem; }
+    .form-group label { font-size: .63rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(200,184,162,.75); }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: .8rem 1rem; background: rgba(255,250,247,.08); border: 1px solid rgba(200,184,162,.35); color: var(--blanco); font-family: var(--sans); font-size: .88rem; font-weight: 300; border-radius: var(--r-input); outline: none; transition: border-color .3s; appearance: none; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(200,184,162,.5); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #AD6F7A; background: rgba(255,250,247,.12); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--carbon); color: var(--blanco); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+    .btn-submit { width: 100%; margin-top: .4rem; padding: 1rem 2rem; background: var(--rosa); color: var(--blanco); font-family: var(--sans); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border: none; border-radius: var(--r-btn); cursor: pointer; transition: background .3s; }
+    .btn-submit:hover { background: var(--rosa-dk); }
+    .form-note { margin-top: 1.5rem; font-size: .72rem; color: rgba(253,250,247,.3); text-align: center; }
+
+    /* ── FOOTER ── */
+    footer { background: #0d2018; border-top: 1px solid rgba(253,250,247,.07); padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo img { height: 36px; filter: brightness(0) invert(1); opacity: .55; }
+    footer p { font-size: .68rem; color: rgba(253,250,247,.25); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .68rem; color: rgba(253,250,247,.35); transition: color .3s; }
+    .footer-links a:hover { color: var(--rosa-lt); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      section { padding: 5rem 1.5rem; }
+      #team-building, #taller-especial { padding: 5rem 1.5rem; }
+      .sobre-grid, .especial-grid, .tb-inner, .fundadora-inner, .contacto-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .exp-grid { grid-template-columns: 1fr 1fr; }
+      .pasos-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .galeria-grid { grid-template-columns: 1fr; }
+      .galeria-item:nth-child(3) { grid-column: auto; aspect-ratio: 4/3; }
+      .incluye-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: .9rem 1.25rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { padding: 0 1.25rem 4.5rem; }
+      section { padding: 4rem 1.25rem; }
+      #team-building, #taller-especial { padding: 4rem 1.25rem; }
+      .exp-grid, .pasos-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 1.75rem 1.25rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { transition: none; }
+      .scroll-hint::after { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="logo.png" alt="LURRARIO Experience" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre Lurrario</a></li>
+    <li><a href="#experiencias">Experiencias</a></li>
+    <li><a href="#team-building">Empresas</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#contacto" class="nav-cta">Reservar plaza</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#sobre" onclick="closeMobile()">Sobre Lurrario</a>
+  <a href="#experiencias" onclick="closeMobile()">Experiencias</a>
+  <a href="#taller-especial" onclick="closeMobile()">Día de la Amistad</a>
+  <a href="#team-building" onclick="closeMobile()">Empresas</a>
+  <a href="#galeria" onclick="closeMobile()">Galería</a>
+  <a href="#contacto" onclick="closeMobile()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+    <img src="img-hero.png" alt="Terrario LURRARIO Experience" />
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Naturaleza en mitad del ruido</p>
+    <h1 class="hero-title">LURRARIO<br><em>Experience</em></h1>
+    <p class="hero-sub">Una experiencia para desconectar, conectar con la naturaleza y crear algo vivo con tus propias manos.</p>
+    <p class="hero-sub2">Crea · Comparte · Desconecta · Donostia</p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">Reservar plaza</a>
+      <a href="#sobre" class="btn-ghost">Conocer más</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Bajar</div>
+</section>
+
+<!-- SOBRE LURRARIO -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img reveal">
+        <img src="img-mesa.jpeg" alt="Taller de terrario LURRARIO" />
+      </div>
+      <div class="reveal">
+        <p class="section-eyebrow">Sobre LURRARIO</p>
+        <h2 class="section-title">Una idea que nació<br><em>de un momento compartido.</em></h2>
+        <div class="sobre-texto">
+          <p>¿Eres de las que llega el fin de semana y no quiere ni bar ni Netflix, sino hacer algo que valga la pena contar el lunes?</p>
+          <p><strong>Vivimos tan deprisa que a veces olvidamos parar. Y crear.</strong></p>
+          <p>LURRARIO nace para recuperar ese momento. Un espacio donde alguien ya pensó por ti — dónde ir, qué poner, qué beber — y tú solo tienes que dejarte llevar y crear.</p>
+          <p>No es solo un plan. Es un recuerdo que te llevas a casa.</p>
+        <p style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--crema-dk);font-size:0.88rem;color:var(--carbon-lt);"><strong style="color:var(--carbon);">¿De dónde viene el nombre?</strong><br>LURRARIO nace de dos palabras: <em>Lurra</em> — tierra en euskera, en honor a los orígenes vascos de su fundadora — y <em>rio</em>, de terraRIO. Tierra + terrario. Un nombre que lleva dentro todo lo que es la marca: raíces, naturaleza y algo que crece.</p>
+        </div>
+        <a href="#experiencias" class="btn-primary" style="margin-top:2rem;">Conoce más</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divisor">
+  <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+    <path d="M8 18 C28 18 38 10 55 18 C72 26 82 18 102 18" stroke="#5C6B52" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="22" cy="12" r="3.5" fill="#5C6B52" opacity="0.5"/>
+    <circle cx="88" cy="24" r="3.5" fill="#5C6B52" opacity="0.5"/>
+    <circle cx="55" cy="18" r="2.5" fill="#C9848A" opacity="0.65"/>
+  </svg>
+</div>
+
+<!-- TALLER ESPECIAL: DÍA DE LA AMISTAD -->
+<div id="taller-especial">
+  <div class="especial-inner">
+    <div class="especial-badge">🌿 &nbsp;Próximo taller especial</div>
+    <div class="especial-grid">
+      <div class="especial-img reveal">
+        <img src="img-brunch.png" alt="Taller Día de la Amistad LURRARIO" />
+      </div>
+      <div class="reveal">
+        <p class="section-eyebrow">BB's Café × LURRARIO Experience</p>
+        <h2 class="section-title">Día de la<br><em>Amistad</em></h2>
+        <p class="especial-subtitulo">Invita a quien siempre está.</p>
+        <p class="especial-desc">Una experiencia para desconectar del ritmo diario, dejar el móvil a un lado y volver a crear algo con tus propias manos. Un plan diferente para celebrar la amistad.</p>
+
+        <div class="especial-incluye">
+          <h4>Incluye</h4>
+          <div class="incluye-grid">
+            <div class="incluye-item"><span>🍷</span> Picoteo y vino</div>
+            <div class="incluye-item"><span>🌿</span> Taller de terrarios</div>
+            <div class="incluye-item"><span>🫙</span> Recipiente de cristal</div>
+            <div class="incluye-item"><span>🪴</span> Plantas tropicales</div>
+            <div class="incluye-item"><span>🛠</span> Materiales y herramientas</div>
+            <div class="incluye-item"><span>🤝</span> Un momento para conectar</div>
+          </div>
+        </div>
+
+        <div class="especial-datos">
+          <div class="dato">
+            <span class="dato-label">📅 Fecha</span>
+            <span class="dato-valor">Sábado 18 de julio</span>
+          </div>
+          <div class="dato">
+            <span class="dato-label">📍 Lugar</span>
+            <span class="dato-valor">BB's Café · Abadiño</span>
+          </div>
+          <div class="dato">
+            <span class="dato-label">⏱ Duración</span>
+            <span class="dato-valor">Aprox. 1h30</span>
+          </div>
+          <div class="dato">
+            <span class="dato-label">👥 Grupos</span>
+            <span class="dato-valor">Máx. 10 personas</span>
+          </div>
+        </div>
+
+        <p class="especial-precio">55€ <small>/ persona · todo incluido</small></p>
+        <a href="#contacto" class="btn-primary">Reserva tu plaza</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divisor" style="background:var(--blanco);margin:0;padding:2.5rem 0;">
+  <svg width="110" height="36" viewBox="0 0 110 36" fill="none">
+    <path d="M8 18 C28 18 38 26 55 18 C72 10 82 18 102 18" stroke="#5C6B52" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="32" cy="25" r="3.5" fill="#5C6B52" opacity="0.5"/>
+    <circle cx="78" cy="11" r="3.5" fill="#5C6B52" opacity="0.5"/>
+    <circle cx="55" cy="18" r="2.5" fill="#C9848A" opacity="0.65"/>
+  </svg>
+</div>
+
+<!-- NUESTRAS EXPERIENCIAS -->
+<section id="experiencias">
+  <div class="container">
+    <div class="exp-intro reveal">
+      <p class="section-eyebrow">Nuestras experiencias</p>
+      <h2 class="section-title">Elige tu <em>momento.</em></h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <div class="exp-img">
+          <img src="img-taller.png" alt="Talleres abiertos LURRARIO" />
+          <div class="exp-badge-icon">🌿</div>
+        </div>
+        <div class="exp-body">
+          <h3>Talleres abiertos</h3>
+          <p>Un espacio tranquilo para desconectar del ruido cotidiano, crear con tus manos y llevarte algo único. Todos los materiales incluidos, guía experta en todo momento.</p>
+          <a href="#contacto" class="exp-link">Ver más →</a>
+        </div>
+      </div>
+      <div class="exp-card reveal">
+        <div class="exp-img">
+          <img src="img-brunch.png" alt="Talleres Brunch y Wine LURRARIO" />
+          <div class="exp-badge-icon">🍷</div>
+        </div>
+        <div class="exp-body">
+          <h3>Talleres con Brunch &amp; Wine</h3>
+          <p>Disfruta de una experiencia creativa acompañada de brunch o una copa de vino. El plan perfecto para celebrar con las tuyas.</p>
+          <a href="#contacto" class="exp-link">Ver más →</a>
+        </div>
+      </div>
+      <div class="exp-card reveal">
+        <div class="exp-img">
+          <img src="img-taller.png" alt="Team Building LURRARIO" style="object-position: right center;" />
+          <div class="exp-badge-icon">👥</div>
+        </div>
+        <div class="exp-body">
+          <h3>Team Building</h3>
+          <p>Actividades para empresas que fomentan la creatividad, el bienestar y la conexión real entre equipos.</p>
+          <a href="#team-building" class="exp-link">Ver más →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="container">
+    <div class="galeria-intro reveal">
+      <p class="section-eyebrow">Galería</p>
+      <h2 class="section-title">Un pequeño universo<br><em>en cada detalle.</em></h2>
+    </div>
+    <div class="galeria-grid">
+      <div class="galeria-item reveal">
+        <img src="img-hero.png" alt="Terrario LURRARIO" />
+      </div>
+      <div class="galeria-item reveal">
+        <img src="img-materiales.png" alt="Materiales taller LURRARIO" />
+      </div>
+      <div class="galeria-item reveal">
+        <img src="img-taller.png" alt="Taller LURRARIO" />
+      </div>
+    </div>
+    <div class="galeria-cta reveal">
+      <a href="https://instagram.com/lurrario.experience" target="_blank" class="btn-outline">Ver galería completa en Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ASÍ FUNCIONA -->
+<section id="como-funciona">
+  <div class="container">
+    <div class="funciona-intro reveal">
+      <p class="section-eyebrow">Así funciona</p>
+      <h2 class="section-title">En cuatro pasos <em>sencillos.</em></h2>
+    </div>
+    <div class="pasos-grid">
+      <div class="paso reveal">
+        <div class="paso-icon">📅</div>
+        <h3>1. Elige tu experiencia</h3>
+        <p>Escoge la fecha y el tipo de taller. Abierto, privado o con maridaje.</p>
+      </div>
+      <div class="paso reveal">
+        <div class="paso-icon">🌱</div>
+        <h3>2. Diseña tu terrario</h3>
+        <p>Te guiamos paso a paso para crear tu propio universo verde desde cero.</p>
+      </div>
+      <div class="paso reveal">
+        <div class="paso-icon">💧</div>
+        <h3>3. Aprende a cuidarlo</h3>
+        <p>Te llevás consejos y trucos para que tu terrario viva durante mucho tiempo.</p>
+      </div>
+      <div class="paso reveal">
+        <div class="paso-icon">🏡</div>
+        <h3>4. Llévate tu mundo a casa</h3>
+        <p>Te vas con tu terrario y el recuerdo único de una experiencia especial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM BUILDING -->
+<section id="team-building">
+  <div class="tb-inner">
+    <div class="reveal">
+      <p class="section-eyebrow">Para empresas</p>
+      <h2 class="section-title">Team Building<br><em>verde.</em></h2>
+      <p class="section-body">Una actividad diferente para equipos que buscan creatividad, bienestar y conexión real. Alejamos a tu equipo de las pantallas para crear algo con las manos, juntos.</p>
+      <ul class="tb-list">
+        <li>Fomenta la creatividad, el bienestar y la conexión entre personas</li>
+        <li>Sin esfuerzo organizativo — nosotras pensamos en todo</li>
+        <li>Adaptamos el formato, el espacio y el número de asistentes</li>
+        <li>Disponible en vuestras instalaciones o en nuestros espacios colaboradores</li>
+        <li>Grupos desde 8 hasta 40 personas</li>
+      </ul>
+      <a href="#contacto" class="btn-light" style="margin-top:2rem;">Más información</a>
+    </div>
+    <div class="tb-img-box reveal">
+      <img src="img-taller.png" alt="Team Building LURRARIO" />
+    </div>
+  </div>
+</section>
+
+<!-- FUNDADORA -->
+<section id="fundadora">
+  <div class="container">
+    <div class="fundadora-inner">
+      <div class="fundadora-img reveal">
+        <img src="img-fundadora.png" alt="Miriam Olaizola — Fundadora de LURRARIO" />
+      </div>
+      <div class="reveal">
+        <p class="section-eyebrow">Sobre la fundadora</p>
+        <blockquote class="fundadora-quote">
+          "Entendí que el verdadero valor no estaba en el terrario terminado, sino en todo lo que ocurre durante el proceso de creación."
+        </blockquote>
+        <p class="fundadora-text">Todo empezó con un regalo. Mi pareja me regaló un taller de terrarios y cada uno creó el suyo: él para su abuela, yo para la que sería nuestra primera casa juntos. Ese terrario — hecho con mis propias manos, en un momento real — sigue siendo una de las plantas más queridas de mi hogar. Ninguna planta comprada tiene eso.</p>
+        <p class="fundadora-text" style="margin-top:1rem;">A partir de ahí entendí que el valor no estaba en el terrario terminado, sino en lo que ocurre mientras lo creas. La calma. El proceso. La gente con quien lo vives. De esa idea — y de una semana difícil en el sofá con mi pareja — nació LURRARIO. Para que otras personas puedan llevarse ese mismo recuerdo a casa.</p>
+        <div class="fundadora-name">
+          Miriam Olaizola Schwarzenbach
+          <small>Fundadora · LURRARIO Experience</small>
+          <span class="bio">Gestión operativa, eventos corporativos, marketing y coordinación logística</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRASE CIERRE -->
+<div id="frase">
+  <blockquote>Crea.<br>Comparte.<br><em>Desconecta.</em></blockquote>
+</div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="contacto-grid">
+      <div class="contacto-izq reveal">
+        <p class="section-eyebrow">Hablemos</p>
+        <h2 class="section-title">¿Tienes dudas o quieres<br><em>reservar tu plaza?</em></h2>
+        <p class="section-body">Escríbenos, estaremos encantadas de ayudarte a encontrar la experiencia perfecta para ti o tu grupo.</p>
+        <div class="contacto-canales">
+          <a href="https://wa.me/34617126517" target="_blank" class="canal-btn canal-whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://instagram.com/lurrario.experience" target="_blank" class="canal-btn canal-instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            @lurrario.experience
+          </a>
+          <a href="mailto:miriamolaizola93@gmail.com" class="canal-btn canal-email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            miriamolaizola93@gmail.com
+          </a>
+        </div>
+      </div>
+      <div class="contacto-der reveal">
+        <p class="section-eyebrow">Escríbenos</p>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre" required /></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com" required /></div>
+          </div>
+          <div class="form-group">
+            <label>Tipo de experiencia</label>
+            <select>
+              <option value="">Selecciona una opción</option>
+              <option>Taller abierto</option>
+              <option>Taller Día de la Amistad — 18 julio</option>
+              <option>Taller con Brunch o Wine</option>
+              <option>Experiencia privada (grupo)</option>
+              <option>Team Building para empresa</option>
+              <option>Quiero regalar una experiencia</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Número de personas</label><input type="text" placeholder="Ej: 2, 8, 15..." /></div>
+          <div class="form-group"><label>Mensaje</label><textarea placeholder="Cuéntanos qué estás buscando..."></textarea></div>
+          <button type="submit" class="btn-submit">Enviar mensaje</button>
+          <p class="form-note">miriamolaizola93@gmail.com · @lurrario.experience</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo"><img src="logo.png" alt="LURRARIO Experience" /></a>
+  <p>© 2026 LURRARIO Experience &nbsp;|&nbsp; Donostia / San Sebastián</p>
+  <div class="footer-links">
+    <a href="#">Aviso legal</a>
+    <a href="#">Política de privacidad</a>
+    <a href="#">Cookies</a>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 60); });
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = '¡Mensaje enviado! Te escribimos pronto 🌿';
+    btn.style.background = '#5C6B52';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
